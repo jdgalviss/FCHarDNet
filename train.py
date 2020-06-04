@@ -83,9 +83,11 @@ def train(cfg, writer, logger):
 
     model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
     model.apply(weights_init)
+    ## ============Check how to load now that you are using different classes
     pretrained_path='weights/hardnet_petite_base.pth'
     weights = torch.load(pretrained_path)
     model.module.base.load_state_dict(weights)
+    # ============================================================
 
     # Setup optimizer, lr_scheduler and loss function
     optimizer_cls = get_optimizer(cfg)
